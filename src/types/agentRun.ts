@@ -11,6 +11,8 @@ export interface AgentRun {
 }
 
 export interface RunsFilters {
+  page: number;
+  pageSize: number;
   search: string;
   status: RunStatus | "all";
   sortOrder: "asc" | "desc";

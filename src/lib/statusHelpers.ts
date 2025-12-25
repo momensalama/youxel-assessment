@@ -1,4 +1,4 @@
-import type { RunStatus } from "@/types/AgentRun";
+import type { RunStatus } from "@/types/agentRun";
 
 export const getStatusVariant = (
   status: RunStatus
