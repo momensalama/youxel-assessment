@@ -6,7 +6,14 @@ import { useQuery } from "@tanstack/react-query";
 export const useRunsQuery = (params: UseRunsQueryProps) => {
   return useQuery({
     queryKey: ["runs", params],
-    queryFn: () => mockApi.getRuns(params),
+    queryFn: () =>
+      mockApi.getRuns({
+        page: params.page,
+        pageSize: params.pageSize,
+        search: params.search,
+        status: params.statusFilter,
+        sortOrder: params.sortOrder,
+      }),
     staleTime: QUERY_RUNS_STALE_TIME,
   });
 };

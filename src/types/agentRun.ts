@@ -28,6 +28,6 @@ export interface UseRunsQueryProps {
   page: number;
   pageSize: number;
   search: string;
-  status: RunStatus | "all";
+  statusFilter: RunStatus | "all";
   sortOrder: "asc" | "desc";
 }
