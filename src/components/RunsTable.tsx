@@ -33,7 +33,11 @@ import { PAGE_SIZE } from "@/constants/query";
 import Pagination from "./Pagination";
 import { STATUS_OPTIONS } from "@/constants/agent";
 
-function RunsTable() {
+interface RunsTableProps {
+  readonly onRunClick: (runId: string) => void;
+}
+
+function RunsTable({ onRunClick }: RunsTableProps) {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState<RunStatus | "all">("all");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
@@ -140,6 +144,7 @@ function RunsTable() {
               role="button"
               tabIndex={0}
               aria-label={`View details for run ${run.runId}`}
+              onClick={() => onRunClick(run.runId)}
             >
               <TableCell className="font-mono text-sm text-gray-900">
                 {run.runId}
@@ -184,8 +189,16 @@ function RunsTable() {
           />
         </div>
 
-        <Select value={statusFilter} onValueChange={handleStatusFilter}>
-          <SelectTrigger className="w-full sm:w-40 bg-white">
+        <Select
+          value={statusFilter}
+          onValueChange={handleStatusFilter}
+          disabled={isFetching}
+        >
+          <SelectTrigger
+            className="w-full sm:w-40 bg-white"
+            disabled={isFetching}
+            aria-label="Status filter"
+          >
             <SelectValue
               className="bg-white"
               placeholder={
@@ -205,6 +218,7 @@ function RunsTable() {
         <Button
           variant="outline"
           onClick={toggleSortOrder}
+          disabled={isFetching}
           className="h-10 px-4"
           aria-label={`Sort by date ${
             sortOrder === "desc" ? "ascending" : "descending"

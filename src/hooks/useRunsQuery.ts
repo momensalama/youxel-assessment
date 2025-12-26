@@ -18,7 +18,7 @@ export const useRunsQuery = (params: UseRunsQueryProps) => {
   });
 };
 
-export const useRunQuery = (runId: string) => {
+export const useRunByIdQuery = (runId: string) => {
   return useQuery({
     queryKey: ["run", runId],
     queryFn: () => mockApi.getRun(runId),
