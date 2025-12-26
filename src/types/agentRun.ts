@@ -23,3 +23,11 @@ export interface PaginationState {
   pageSize: number;
   total: number;
 }
+
+export interface UseRunsQueryProps {
+  page: number;
+  pageSize: number;
+  search: string;
+  status: RunStatus | "all";
+  sortOrder: "asc" | "desc";
+}
