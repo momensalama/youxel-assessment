@@ -1,5 +1,5 @@
 import { QUERY_RUN_STALE_TIME, QUERY_RUNS_STALE_TIME } from "@/constants/query";
-import { mockApi } from "@/services/mockApiData";
+import { mockApi } from "@/services/mockApi";
 import type { UseRunsQueryProps } from "@/types/agentRun";
 import { useQuery } from "@tanstack/react-query";
 
