@@ -30,6 +30,8 @@ import type { RunStatus } from "@/types/agentRun";
 import { getStatusVariant } from "@/lib/statusHelpers";
 import { formatDate, formatDuration, formatNumber } from "@/lib/dateFormatters";
 import { PAGE_SIZE } from "@/constants/query";
+import Pagination from "./Pagination";
+import { STATUS_OPTIONS } from "@/constants/agent";
 
 function RunsTable() {
   const [search, setSearch] = useState("");
@@ -37,7 +39,6 @@ function RunsTable() {
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [page, setPage] = useState(1);
 
-  // Use the custom hook with parameters
   const { data, isLoading, error, refetch, isFetching } = useRunsQuery({
     search,
     statusFilter,
@@ -67,14 +68,6 @@ function RunsTable() {
     setSortOrder("desc");
     setPage(1);
   };
-
-  const statusOptions: { value: RunStatus | "all"; label: string }[] = [
-    { value: "all", label: "All Statuses" },
-    { value: "Queued", label: "Queued" },
-    { value: "Running", label: "Running" },
-    { value: "Succeeded", label: "Succeeded" },
-    { value: "Failed", label: "Failed" },
-  ];
 
   const renderTableContent = () => {
     if (isLoading) {
@@ -187,11 +180,12 @@ function RunsTable() {
             onChange={(e) => handleSearch(e.target.value)}
             className="pl-9 h-10"
             aria-label="Search runs"
+            autoFocus
           />
         </div>
 
         <Select value={statusFilter} onValueChange={handleStatusFilter}>
-          <SelectTrigger className="w-37.5 h-12 bg-white">
+          <SelectTrigger className="w-full sm:w-40 bg-white">
             <SelectValue
               className="bg-white"
               placeholder={
@@ -200,9 +194,9 @@ function RunsTable() {
             />
           </SelectTrigger>
           <SelectContent>
-            {statusOptions.map((option) => (
-              <SelectItem key={option.value} value={option.value}>
-                {option.label}
+            {STATUS_OPTIONS.map(({ value, label }) => (
+              <SelectItem key={value} value={value}>
+                {label}
               </SelectItem>
             ))}
           </SelectContent>
@@ -247,6 +241,16 @@ function RunsTable() {
 
       <div className="bg-white rounded-lg border border-gray-200 shadow-sm overflow-hidden">
         {renderTableContent()}
+
+        {data && (
+          <Pagination
+            currentPage={page}
+            totalPages={data.totalPages}
+            total={data.total}
+            pageSize={PAGE_SIZE}
+            onPageChange={setPage}
+          />
+        )}
       </div>
     </div>
   );

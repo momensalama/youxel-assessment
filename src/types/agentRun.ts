@@ -31,3 +31,11 @@ export interface UseRunsQueryProps {
   statusFilter: RunStatus | "all";
   sortOrder: "asc" | "desc";
 }
+
+export interface PaginationProps {
+  readonly currentPage: number;
+  readonly totalPages: number;
+  readonly onPageChange: (page: number) => void;
+  readonly total: number;
+  readonly pageSize: number;
+}

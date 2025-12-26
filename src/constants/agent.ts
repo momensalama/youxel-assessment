@@ -1,3 +1,5 @@
+import type { RunStatus } from "@/types/agentRun";
+
 export const AGENT_NAMES = [
   "DataProcessor",
   "ContentAnalyzer",
@@ -19,3 +21,11 @@ export const ERROR_MESSAGES = [
 ];
 
 export const STATUSES = ["Queued", "Running", "Succeeded", "Failed"] as const;
+
+export const STATUS_OPTIONS: { value: RunStatus | "all"; label: string }[] = [
+  { value: "all", label: "All Statuses" },
+  { value: "Queued", label: "Queued" },
+  { value: "Running", label: "Running" },
+  { value: "Succeeded", label: "Succeeded" },
+  { value: "Failed", label: "Failed" },
+];
